@@ -97,31 +97,13 @@
 					</p>
 				</section>
 				<section>
-					<h2>3 Things About WebSocket</h2>
-					<p>Little to No Overhead</p>
-					<p>Full-Duplex Bi-directional Communication</p>
-					<p>Layered Subprotocol Support</p>
-				</section>
-				<section>
-					<h2>WebSocket - What Is It Good For</h2>
-					<p>Chat Applications</p>
-					<p>Financial Tickers</p>
-					<p>and...</p>
-					<aside class="notes">
-						Clickstream Data
-						Multiplayer Games
-						Social Feeds
-						Sports Apps
-					</aside>
-				</section>
-				<section>
 					<section>
 						<h2>About Me</h2>
 						<img src="images/me_and_jd.png" />
 					</section>
 					<section>
 						<h2>About Me</h2>
-						<p>15 Years in Business</p>
+						<p>18 Years in Business</p>
 						<p>Published Author</p>
 						<p>Software Consultants</p>
 						<p>International Speakers</p>
@@ -131,497 +113,457 @@
 						<p class="fragment"><strong>To our success!</strong></p>
 					</section>
 				</section>
-				<section fullscreen-img="images/rakia_63.png" />
-				</section>
 				<section>
 					<h2>WebSocket Book</h2>
-					<img class="stretch" src="images/WebSocket_comp.png" />
+					<img class="stretch" src="images/WebSocket_comp.png" /><br />
 					<a href="http://bit.ly/lombardi_websocket_book">http://bit.ly/lombardi_websocket_book</a>
 				</section>
 				<section>
-					<section>
-						<h2>A History of Hacks</h2>
-						<p>Adobe Flash&reg; Socket</p>
-						<p>HTTP Polling</p>
-						<p>AJAX long polling &amp; multipart-streaming</p>
-						<p>Forever Frame</p>
-						<p>JSONP Polling</p>
-						<aside class="notes">
-						Talk about the various technologies, forever frame, AJAX (go ms!), and the problems
-						with HTTP Long Polling on older browsers with the 2-connection per domain limit
-						</aside>
-					</section>
-					<section>
-						<h2>HTTP Polling</h2>
-						<ul>
-							<li>Browser sends HTTP requests at regular intervals</li>
-							<li>Refreshes to the client are noisy</li>
-							<li>Real-time data is not deterministic</li>
-						</ul>
-						<aside class="notes">
-						With polling, the browser sends HTTP requests at regular intervals and immediately receives a response.  This technique was the first attempt for the browser to deliver real-time information. Obviously, this is a good solution if the exact interval of message delivery is known, because you can synchronize the client request to occur only when information is available on the server. However, real-time data is often not that predictable, making unnecessary requests inevitable and as a result, many connections are opened and closed needlessly in low-message-rate situations.
-						</aside>
-					</section>
-					<section>
-						<h2>HTTP Long Polling</h2>
-						<ul>
-							<li>Browser sends HTTP requests to server and request is kept open</li>
-							<li>Could throttle out of control</li>
-						</ul>
-						<aside class="notes">
-						With long-polling, the browser sends a request to the server and the server keeps the request open for a set period. If a notification is received within that period, a response containing the message is sent to the client. If a notification is not received within the set time period, the server sends a response to terminate the open request. It is important to understand, however, that when you have a high message volume, long-polling does not provide any substantial performance improvements over traditional polling.  In fact, it could be worse, because the long-polling might spin out of control into an unthrottled, continuous loop of immediate polls.
-						</aside>
-					</section>
-					<section>
-						<h2>Streaming</h2>
-						<ul>
-							<li>Browser sends complete request but server keeps open</li>
-							<li>Response updated intermittently when new data arrives</li>
-							<li>Firewalls and proxy servers may buffer causing latency</li>
-							<li>HTTPS can be used but introduces additional resource cost</li>
-						</ul>
-						<aside class="notes">
-						With streaming, the browser sends a complete request, but the server sends and maintains an open response that is continuously updated and kept open indefinitely (or for a set period of time). The response is then updated whenever a message is ready to be sent, but the server never signals to complete the response, thus keeping the connection open to deliver future messages. However, since streaming is still encapsulated in HTTP, intervening firewalls and proxy servers may choose to buffer the response, increasing the latency of the message delivery. Therefore, many streaming Comet solutions fall back to long-polling in case a buffering proxy server is detected. Alternatively, TLS (SSL) connections can be used to shield the response from being buffered, but in that case the setup and tear down of each connection taxes the available server resources more heavily.
-						</aside>
-					</section>
-				</section>
-				<section>
-					<img src="images/websocket-logo-pusher.png" class="stretch" />
-					<p>
-						<strong>WebSocket</strong> gives you a full-duplex bi-directional communications channel that operates over <strong>HTTP or HTTPS</strong> through a single socket.
-					</p>
-				</section>
-				<section>
-					<section>
-						<h2>3 Things About WebSocket</h2>
-						<p style="text-decoration: underline;">Little to No Overhead</p>
-						<p>Full-Duplex Bi-directional Communication</p>
-						<p>Layered Subprotocol Support</p>
-					</section>
-					<section>
-						<h2>HTTP / REST call</h2>
-						<ul>
-							<li><strong>Use case A:</strong> 1,000 clients polling every second: Network throughput is (871 x 1,000) = 871,000 bytes = 6,968,000 bits per second (6.6 Mbps)</li>
-							<li><strong>Use case B:</strong> 10,000 clients polling every second: Network throughput is (871 x 10,000) = 8,710,000 bytes = 69,680,000 bits per second (66 Mbps)</li>
-							<li><strong>Use case C:</strong> 100,000 clients polling every 1 second: Network throughput is (871 x 100,000) = 87,100,000 bytes = 696,800,000 bits per second (665 Mbps)
-							</li>
-						</ul>
-						<p>&nbsp;</p>
-						<small>Source: <a href="http://www.websocket.org/quantum.html">http://www.websocket.org/quantum.html</a></small>
-					</section>
-					<section>
-						<h2>WebSocket call</h2>
-						<ul>
-							<li><strong>Use case A:</strong> 1,000 clients receive 1 message per second: Network throughput is (2 x 1,000) = 2,000 bytes = 16,000 bits per second (0.015 Mbps)</li>
-							<li><strong>Use case B:</strong> 10,000 clients receive 1 message per second: Network throughput is (2 x 10,000) = 20,000 bytes = 160,000 bits per second (0.153 Mbps)</li>
-							<li><strong>Use case C:</strong> 100,000 clients receive 1 message per second: Network throughput is (2 x 100,000) = 200,000 bytes = 1,600,000 bits per second (1.526 Mbps)
-							</li>
-						</ul>
-
-						<p>&nbsp;</p>
-						<p>WebSocket overhead is as little as 2 bytes and never more than 8 bytes after handshake</p>
-						<p>&nbsp;</p>
-						<small>Source: <a href="http://www.websocket.org/quantum.html">http://www.websocket.org/quantum.html</a></small>
-					</section>
-					<section>
-						<h2>Size Matters</h2>
-						<p>Look at the new Google logo:
-							<ul>
-								<li>theoretical size if rendered as SVG of just 305 bytes</li>
-								<li>The old logo was 14,000 bytes</li>
-								<li>5 billion page views daily</li>
-								<li>New logo can be 45x smaller in filesize</li>
-							</ul>
-						</p>
-					</section>
-				</section>
-				<section>
-					<section>
-						<h2>3 Things About WebSocket</h2>
-						<p style="text-decoration: line-through;">Little to No Overhead</p>
-						<p style="text-decoration: underline;">Full-Duplex Bi-directional Communication</p>
-						<p>Layered Subprotocol Support</p>
-					</section>
-					<section>
-						<h2>Hello, World</h2>
-						<p>Let's take a look at the server</p>
-<pre><code data-trim>var WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 8181});
-
-wss.on('connection', function(ws) {
-  ws.on('message', function(message) {
-    console.log(message);
-  });
-});
-</code></pre>
-					<p>Uses <a href="http://einaros.github.io/ws/">einaros.github.io/ws</a> nodejs library</p>
-					</section>
-					<section>
-					    <object type="image/svg+xml" width="300" height="300" data="images/nodejs_logo.svg"></object>
-
-						<h2>Examples in NodeJS</h2>
-						<p>Single language</p>
-						<p>Built in support for WebSocket</p>
-						<p>Client is JavaScript</p>
-					</section>
-
-					<section>
-					<h2>Hello, World</h2>
-					<p>The client HTML</p>
-<pre><code data-trim>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;WebSocket Echo Demo&lt;/title&gt;
-    &lt;script&gt;
-        var ws = new WebSocket(&quot;ws://localhost:8181&quot;);
-        ws.onopen = function(e) {
-          console.log('Connection to server opened');
-        }
-
-        function sendMessage() {
-           ws.send(document.getElementById('message').value);
-		   return false;
-        }
-    &lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;form onsubmit=&quot;return sendMessage();&quot;&gt;
-        &lt;input type=&quot;text&quot; name=&quot;message&quot; id=&quot;message&quot;
-          placeholder=&quot;Type text to echo in here&quot; value=&quot;&quot; autofocus/&gt;
-        &lt;input type=&quot;button&quot; value=&quot;Send!&quot;
-          onclick=&quot;sendMessage();&quot; /&gt;
-  &lt;/form&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-					</section>
-					<section>
-						<h2>Request Headers</h2>
-<pre><code data-trim>GET ws://localhost:8181/ HTTP/1.1
-Pragma: no-cache
-Origin: null
-Host: localhost:8181
-Sec-WebSocket-Key: qalODNsUoRp+2K9FJty55Q==
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3)...
-Upgrade: websocket
-Sec-WebSocket-Extensions: x-webkit-deflate-frame
-Cache-Control: no-cache
-Connection: Upgrade
-Sec-WebSocket-Version: 13
-</code></pre>
-					</section>
-					<section>
-						<h2>Response Headers</h2>
-<pre><code data-trim>HTTP/1.1 101 Switching Protocols
-Connection: Upgrade
-Sec-WebSocket-Accept: nambQ7W9imtAIYpzsw4hNNuGD58=
-Upgrade: websocket
-</code></pre>
+					<h2>What is Blockchain</h2>
 					<aside class="notes">
-					If response is working, then will get HTTP/1.1 101 Switching Protocols and a Connection: Upgrade
+						It is a persistent transparent public append only ledger.  A system
+						you can add data to and not change previous data within it.  It does
+						this through a mechanism for creating consensus between scattered or
+						distributed parties that do not need to trust each other but just need
+						to trust the mechanism by which their consensus is arrived at. In
+						the case of blockchain it relies on some form of challenge such
+						that no one actor on the network is able to solve this challenge
+						consistently more than everyone else on the network.
+
+						In theory ensures no one can force the blockchain to accept an entry
+						onto the ledger that others disagree with one that relies on a peer
+						to peer network that can maintain updates to the ledger and verify
+						those updates in such a way that it is impossible to defraud and
+						impossible to alter after the fact.
+
+						— Finn Bruton, New York University
 					</aside>
-					</section>
-					<section>
-						<h1>Demo</h1>
-					</section>
 				</section>
-			</section>
-			<section>
 				<section>
-					<p>
-						<img src="images/client_notifications.png" />
+					<h2>Proof of Work</h2>
+					<p>Consensus by mining / hashing and is generally energy inefficient</p>
+				</section>
+				<section>
+					<h2>Electricity Consumption</h2>
+					<img src="images/electricity_consumption_bitcoin.png" />
+				</section>
+				<section>
+					<h2>Proof of Stake</h2>
+					<p>Not based on computing power, but on your <em>stake</em> in the network</p>
+					<p>Ethereum will use a consensus by bet idea</p>
+				</section>
+				<section>
+					<h2>Applications of Blockchain</h2>
+					<p>Digital currency</p>
+					<p>Voting</p>
+					<p>Smart Contracts</p>
+					<p>Identity</p>
+					<p>Cloud storage</p>
+				</section>
+				<section>
+					<h2>What is ERC20?</h2>
+				</section>
+				<section>
+					<h2>ERC20 Token Standard</h2>
+<pre><code>
+	contract ERC20Interface {
+	    function totalSupply() public constant returns (uint);
+	    function balanceOf(address tokenOwner) public constant returns (uint balance);
+	    function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+	    function transfer(address to, uint tokens) public returns (bool success);
+	    function approve(address spender, uint tokens) public returns (bool success);
+	    function transferFrom(address from, address to, uint tokens) public returns (bool success);
+	    event Transfer(address indexed from, address indexed to, uint tokens);
+	    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+	}
+</code></pre>
+				</section>
+				<section>
+					<h2>Additional Metadata</h2>
+<pre><code>
+	string public constant name = "Token Name";
+	string public constant symbol = "SYM";
+	uint8 public constant decimals = 18;  // 18 is the most common number of decimal places
+</code></pre>
+				</section>
+				<section>
+					<h2>Solidity</h2>
+					<p>Ethereum's smart contract language</p>
+					<p>Influenced by JavaScript, C++, Python, PowerShell</p>
+				</section>
+				<section>
+					<h2>Install Solidity Compiler</h2>
+<pre><code>
+npm install -g solc
+</code></pre>
+					<p>Available as <code>solcjs</code></p>
+				</section>
+				<section>
+					<h2>Layout of a solidity file</h2>
+
+<pre><code>pragma solidity ^0.4.19;</code></pre>
+					<p>Ensure contract only runs on specific version</p>
+				</section>
+				<section>
+					<h2>Application Binary Interface</h2>
+					<p>Specification for Solidity ABI available at <a href="https://solidity.readthedocs.io/en/develop/abi-spec.html">https://solidity.readthedocs.io/en/develop/abi-spec.html</a>
 					</p>
 				</section>
 				<section>
-					<h2>Server</h2>
-<pre><code data-trim>var WebSocket = require('ws');
-var WebSocketServer = WebSocket.Server,
-    wss = new WebSocketServer({port: 8181});
-var uuid = require('node-uuid');
-
-wss.on('connection', function(ws) {
-  ws.on('message', function(message) {
-	...
-  });
-
-  ws.on('close', function() {
-	 ...
-  });
-
-});
-</code></pre>
+					<h2>Booleans</h2>
+					<p><strong>bool</strong> allowed values of <strong>true</strong> and <strong>false</strong>
+					<table class="reveal">
+							<tr><th>Operator</th><th>Description</th></tr>
+							<tr><td>!</td><td>logical negation</td></tr>
+							<tr><td>&&</td><td>logical conjunction, "and"</td></tr>
+							<tr><td>||</td><td>logical disjunction, "or"</td></tr>
+							<tr><td>==</td><td>equality</td></tr>
+							<tr><td>!=</td><td>inequality</td></tr>
+					</table>
 				</section>
 				<section>
-					<h2>Managing Clients</h2>
-<pre><code data-trim>var clients = [];
-
-var clientIndex = 1;
-
-var clientIndex = 1;
-
-wss.on('connection', function(ws) {
-  var client_uuid = uuid.v4();
-  var nickname = "AnonymousUser"+clientIndex;
-  clientIndex+=1;
-  clients.push({"id": client_uuid, "ws": ws, "nickname": nickname});
-  console.log('client [%s] connected', client_uuid);
-
-  var connect_message = nickname + " has connected";
-  wsSend("notification", client_uuid, nickname, connect_message);
-  ...
-</code></pre>
+					<h2>Integers</h2>
+					<p><strong>int</strong> / <strong>uint</strong> default is 256 but can specify in steps of 8 up to 256 bits
+					<table class="reveal">
+							<tr><th>Operator</th><th>Description</th></tr>
+							<tr><td>&lt;=, &lt;, ==, !=, &gt;=, &gt;</td><td>comparisons</td></tr>
+							<tr><td>&amp;, |, ^, ~</td><td>bit operators</td></tr>
+							<tr><td>+, -, *, /, %, **, &lt;&lt;, &gt;&gt;</td><td>arithmetic operators</td></tr>
+					</table>
 				</section>
 				<section>
-					<h2>Message All Clients</h2>
-<pre><code data-trim>
-function wsSend(type, client_uuid, nickname, message) {
-  for(var i=0; i&lt;clients.length; i++) {
-    var clientSocket = clients[i].ws;
-    if(clientSocket.readyState === WebSocket.OPEN) {
-      clientSocket.send(JSON.stringify({
-        &quot;type&quot;: type,
-        &quot;id&quot;: client_uuid,
-        &quot;nickname&quot;: nickname,
-        &quot;message&quot;: message
-      }));
+					<h2>Address</h2>
+
+					<strong>address</strong> Holds a 20 byte value (size of an Ethereum address). Address types also have members and serve as a
+					base for all contracts.
+
+					<table class="reveal">
+							<tr><th>Operator</th><th>Description</th></tr>
+							<tr><td>&lt;=, &lt;, ==, !=, &gt;=, &gt;</td><td>comparisons</td></tr>
+					</table>
+				</section>
+				<section>
+					<h2>Members of Addresses</h2>
+					<table class="reveal">
+							<tr><th>Member</th><th>Description</th></tr>
+							<tr><td><code>.balance</code> and <code>.transfer</code></td><td>get balance and transfer balance</td></tr>
+							<tr><td><code>.send</code></td><td>low level counterpart to transfer (danger will robinson)</td></tr>
+					</table>
+				</section>
+				<section>
+					<h2>Fixed-size byte arrays</h2>
+
+					<p>bytes1, bytes2, bytes3, …, bytes32. byte is an alias for bytes1.</p>
+
+					<table class="reveal">
+							<tr><th>Operator</th><th>Description</th></tr>
+							<tr><td>&lt;=, &lt;, ==, !=, &gt;=, &gt;</td><td>comparisons</td></tr>
+							<tr><td>&amp;, |, ^, ~, &lt;&lt;, &gt;&gt;</td><td>bit operators</td></tr>
+							<tr><td>x is of type bytesI x[k] for 0 <= k < I returns kth byte</td><td>index access</td></tr>
+					</table>
+					<table class="reveal">
+						<tr><th>Members</th><th>Description</th></tr>
+						<tr><td>.length</td><td>length of byte array</td></tr>
+					</table>
+				</section>
+				<section>
+					<h2>Dynamically-sized byte array</h2>
+					<p><strong>bytes:</strong> Dynamically-sized byte array, see Arrays. Not a value-type!</p>
+					<p><strong>string:</strong> Dynamically-sized UTF-8-encoded string, see Arrays. Not a value-type!</p>
+				</section>
+				<section>
+					<h2>String Literals</h2>
+
+					<p>Double or single-quotes ("foo" or 'bar').
+						convertible to bytes1, …, bytes32, if they fit, to bytes and to string.</p>
+
+					<p>Note: String literals support escape characters, such as \n, \xNN and \uNNNN. \xNN
+						takes a hex value and inserts the appropriate byte, while \uNNNN
+						takes a Unicode codepoint and inserts an UTF-8 sequence.</p>
+				</section>
+				<section>
+					<h2>Hexadecimal Literals</h2>
+
+					<p>double or single-quotes (hex"001122FF").
+						Their content must be a hexadecimal string and their value will be the binary representation of those values.</p>
+
+					<p>Hexademical Literals behave like String Literals</p>
+				</section>
+				<section>
+					<h2>Enums</h2>
+
+					<p>user-defined type in Solidity convertible to all integer types</p>
+
+<pre><code>
+pragma solidity ^0.4.20;
+
+contract test {
+    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
+    ActionChoices choice;
+    ActionChoices constant defaultChoice = ActionChoices.GoStraight;
+
+    function setGoStraight() public {
+        choice = ActionChoices.GoStraight;
     }
-  }
-}
-</code></pre>
-				</section>
-				<section>
-					<h2>Setup WebSocket Connection</h2>
-<pre><code data-trim>var ws = new WebSocket("ws://localhost:8181");
-</code></pre>
-				</section>
-				<section>
-					<h2>Send Messages to Server</h2>
-<pre><code data-trim>
-function sendMessage() {
-  var messageField = document.getElementById('message');
-   if(ws.readyState === WebSocket.OPEN) {
-        ws.send(messageField.value);
-   }
-   messageField.value = '';
-   messageField.focus();
-   return false;
-}
-</code></pre>
-				</section>
-				<section>
-					<h2>Append Server Response</h2>
-<pre><code data-trim>
-var data = JSON.parse(e.data);
-nickname = data.nickname;
-appendLog(data.type, data.nickname, data.message);
-</code></pre>
-				</section>
-				<section>
-					<h1>Demo</h1>
-				</section>
-			</section>
-			<section>
-				<section>
-					<h2>3 Things About WebSocket</h2>
-					<p style="text-decoration: line-through;">Little to No Overhead</p>
-					<p style="text-decoration: line-through;">Full-Duplex Bi-directional Communication</p>
-					<p style="text-decoration: underline;">Layered Subprotocol Support</p>
-				</section>
-				<section>
-					<h2>WebSocket Protocol</h2>
-<pre><code data-trim>
-0                   1                   2                   3
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-------+-+-------------+-------------------------------+
-|F|R|R|R| opcode|M| Payload len |    Extended payload length    |
-|I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
-|N|V|V|V|       |S|             |   (if payload len==126/127)   |
-| |1|2|3|       |K|             |                               |
-+-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
-|     Extended payload length continued, if payload len == 127  |
-+ - - - - - - - - - - - - - - - +-------------------------------+
-|                               |Masking-key, if MASK set to 1  |
-+-------------------------------+-------------------------------+
-| Masking-key (continued)       |          Payload Data         |
-+-------------------------------- - - - - - - - - - - - - - - - +
-:                     Payload Data continued ...                :
-+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
-|                     Payload Data continued ...                |
-+---------------------------------------------------------------+
-</code></pre>
-				</section>
-				<section>
-					<h2>WebSocket Constructor</h2>
-					<table width="100%">
-					<thead>
-						<th>Parameter Name</th>
-						<th>Description</th>
-					</thead>
-					<tbody>
-						<tr><td>URL</td><td>URL as <strong>ws://</strong> or <strong>wss://</strong> (if using TLS)</td></tr>
-						<tr><td>protocol (optional)</td><td>parameter specifying sub-protocols that may be used as Array or single string</td></tr>
-					</tbody>
-					</table>
-				</section>
-				<section>
-					<h2>WebSocket Subprotocol</h2>
-					<p>Registered Protocols</p>
-					<small>
-					In the spec for WebSocket RFC 6455, section 11.5 defines the Subprotocol Name Registry for IANA maintained registrations.
-					</small>
-					<p>Open Protocols</p>
-					<small>
-					In addition, you may use open protocols that are unregistered such as Extensible Messaging and Presence Protocol (XMPP) or Simple Text Oriented Message Protocol (STOMP), and various others.
-					</small>
-					<p>Custom</p>
-					<small>
-					You are free to design any protocol you like, as long as your server and client both support it. Recommended is to use names that contain the ASCII version of the domain name of the subprotocol’s originator. "chat.acme.com"
-					</small>
-				</section>
-				<section>
-					<h2>WebSocket Subprotocol</h2>
-					<p>Client sends protocol request</p>
-<pre><code data-trim>
-GET ws://localhost:8181/ HTTP/1.1
-Pragma: no-cache
-Origin: null
-Host: localhost:8181
-Sec-WebSocket-Key: qalODNsUoRp+2K9FJty55Q==
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3)...
-Upgrade: websocket
-Sec-WebSocket-Protocol: com.acme.chat, v10.stomp
-Sec-WebSocket-Extensions: x-webkit-deflate-frame
-Cache-Control: no-cache
-Connection: Upgrade
-Sec-WebSocket-Version: 13
-</code></pre>
-				</section>
-				<section>
-					<h2>Response Headers</h2>
-<pre><code data-trim>HTTP/1.1 101 Switching Protocols
-Connection: Upgrade
-Sec-WebSocket-Accept: nambQ7W9imtAIYpzsw4hNNuGD58=
-Sec-WebSocket-Protocol: v10.stomp
-Upgrade: websocket
-</code></pre>
-				</section>
-			</section>
-			<section>
-				<section>
-					<h1>Compatibility</h1>
-				</section>
-				<section>
-					<h2>Checking if WebSocket ready</h2>
-<pre><code data-trim>function processEvent(e) {
-  if(ws.readyState === WebSocket.OPEN) {
-    // Socket open, send!
-    ws.send(e);
-  } else {
-    // Show an error, queue it for sending later, etc
-  }
-}</code></pre>
-					<p>readyState can be interrogated to ensure open connection before sending</p>
-					<aside class="notes">
 
-					</aside>
-				</section>
-				<section>
-					<h2>WebSocket.readyState</h2>
-					<table width="100%">
-					<thead>
-						<th>Name</th>
-						<th>Value</th>
-						<th>Description</th>
-					</thead>
-					<tbody>
-						<tr><td>WebSocket.CONNECTING</td><td>0</td><td>Connection not yet established</td></tr>
-						<tr><td>WebSocket.OPEN</td><td>1</td><td>Connection is established and ready for messages</td></tr>
-						<tr><td>WebSocket.CLOSING</td><td>2</td><td>Connection is closing handshake</td></tr>
-						<tr><td>WebSocket.CLOSED</td><td>3</td><td>Connection has been closed or could not be opened</td></tr>
-					</tbody>
-					</table>
-				</section>
-				<section>
-					<h2>Checking browser support</h2>
-<pre><code data-trim>
-if (window.WebSocket) {
-    console.log("WebSocket: supported");
-    // ... code here for doing WebSocket stuff
-} else {
-    console.log("WebSocket: unsupported");
-    // ... fallback mode, or error back to user
+    // Since enum types are not part of the ABI, the signature of "getChoice"
+    // will automatically be changed to "getChoice() returns (uint8)"
+    // for all matters external to Solidity. The integer type used is just
+    // large enough to hold all enum values, i.e. if you have more values,
+    // `uint16` will be used and so on.
+    function getChoice() public view returns (ActionChoices) {
+        return choice;
+    }
+
+    function getDefaultChoice() public pure returns (uint) {
+        return uint(defaultChoice);
+    }
 }
 </code></pre>
 				</section>
 				<section>
-					<h2>Browser Support</h2>
-					<table width="100%">
-					<thead>
-						<th>Browser</th>
-						<th>Minimum Version</th>
-					</thead>
-					<tbody>
-						<tr><td>Firefox</td><td>6.0</td></tr>
-						<tr><td>Chrome</td><td>14.0+</td></tr>
-						<tr><td>Safari</td><td>6.0+</td></tr>
-						<tr><td>Opera</td><td>12.1+</td></tr>
-						<tr><td>iOS Safari</td><td>6.0+</td></tr>
-						<tr><td>Android</td><td>4.4+</td></tr>
-					</tbody>
-					</table>
+					<h2>Minimum Viable Token</h2>
+<pre><code>
+	contract MyToken {
+	    /* This creates an array with all balances */
+	    mapping (address => uint256) public balanceOf;
+
+	    /* Initializes contract with initial supply tokens to the creator of the contract */
+	    function MyToken(
+	        uint256 initialSupply
+	        ) {
+	        balanceOf[msg.sender] = initialSupply;              // Give the creator all initial tokens
+	    }
+
+	    /* Send coins */
+	    function transfer(address _to, uint256 _value) {
+	        require(balanceOf[msg.sender] >= _value);           // Check if the sender has enough
+	        require(balanceOf[_to] + _value >= balanceOf[_to]); // Check for overflows
+	        balanceOf[msg.sender] -= _value;                    // Subtract from the sender
+	        balanceOf[_to] += _value;                           // Add the same to the recipient
+	    }
+	}
+</code></pre>
+				</section>
+				<section>
+					<h2>Preamble</h2>
+<pre><code>
+pragma solidity ^0.4.16;
+
+interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
+</pre></code>
+				</section>
+				<section>
+					<h2>Global setup for contract</h2>
+<pre><code>
+contract TokenERC20 {
+    // Public variables of the token
+    string public name;
+    string public symbol;
+    uint8 public decimals = 18;
+    // 18 decimals is the strongly suggested default, avoid changing it
+    uint256 public totalSupply;
+
+    // This creates an array with all balances
+    mapping (address => uint256) public balanceOf;
+    mapping (address => mapping (address => uint256)) public allowance;
+
+    // This generates a public event on the blockchain that will notify clients
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    // This notifies clients about the amount burnt
+    event Burn(address indexed from, uint256 value);
+</pre></code>
+				</section>
+				<section>
+					<h2>Constructor function</h2>
+					<p>Initializes contract and sets up initial supply of tokens for contract creator</p>
+<pre><code>
+    function TokenERC20(
+        uint256 initialSupply,
+        string tokenName,
+        string tokenSymbol
+    ) public {
+        totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount
+        balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens
+        name = tokenName;                                   // Set the name for display purposes
+        symbol = tokenSymbol;                               // Set the symbol for display purposes
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Internal Transfer</h2>
+					<p>Not public, only called by contract</p>
+<pre><code>
+    function _transfer(address _from, address _to, uint _value) internal {
+        // Prevent transfer to 0x0 address. Use burn() instead
+        require(_to != 0x0);
+        // Check if the sender has enough
+        require(balanceOf[_from] >= _value);
+        // Check for overflows
+        require(balanceOf[_to] + _value > balanceOf[_to]);
+        // Save this for an assertion in the future
+        uint previousBalances = balanceOf[_from] + balanceOf[_to];
+        // Subtract from the sender
+        balanceOf[_from] -= _value;
+        // Add the same to the recipient
+        balanceOf[_to] += _value;
+        Transfer(_from, _to, _value);
+        // Asserts are used to use static analysis to find bugs in your code. They should never fail
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Transfer Tokens</h2>
+					<p>Public function for transferring _value tokens _to account</p>
+<pre><code>
+    function transfer(address _to, uint256 _value) public {
+        _transfer(msg.sender, _to, _value);
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Transfer Tokens from other address</h2>
+					<p>Public function for transferring _value to _to from _from</p>
+<pre><code>
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_value <= allowance[_from][msg.sender]);     // Check allowance
+        allowance[_from][msg.sender] -= _value;
+        _transfer(_from, _to, _value);
+        return true;
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Set approved allowance for address</h2>
+					<p>Allows _spender to spend no more than _value</p>
+<pre><code>
+    function approve(address _spender, uint256 _value) public
+        returns (bool success) {
+        allowance[msg.sender][_spender] = _value;
+        return true;
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Set allowance for other address and notify</h2>
+					<p>Allows _spender to spend no more than _value tokens and then notify contract about it</p>
+<pre><code>
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+        public
+        returns (bool success) {
+        tokenRecipient spender = tokenRecipient(_spender);
+        if (approve(_spender, _value)) {
+            spender.receiveApproval(msg.sender, _value, this, _extraData);
+            return true;
+        }
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Destroy / Burn tokens</h2>
+					<p>Remove _value tokens from the system irreversibly</p>
+<pre><code>
+    function burn(uint256 _value) public returns (bool success) {
+        require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough
+        balanceOf[msg.sender] -= _value;            // Subtract from the sender
+        totalSupply -= _value;                      // Updates totalSupply
+        Burn(msg.sender, _value);
+        return true;
+    }
+</pre></code>
+				</section>
+				<section>
+					<h2>Destroy / Burn Tokens from other account</h2>
+					<p>Remove _value tokens from the system by _from</p>
+<pre><code>
+    function burnFrom(address _from, uint256 _value) public returns (bool success) {
+        require(balanceOf[_from] >= _value);                // Check if the targeted balance is enough
+        require(_value <= allowance[_from][msg.sender]);    // Check allowance
+        balanceOf[_from] -= _value;                         // Subtract from the targeted balance
+        allowance[_from][msg.sender] -= _value;             // Subtract from the sender's allowance
+        totalSupply -= _value;                              // Update totalSupply
+        Burn(_from, _value);
+        return true;
+    }
+}
+</code></pre>
+				</section>
+				<section>
+					<h2>Solidity Clients</h2>
+					<p>
+						<ul>
+							<li><a href="https://remix.ethereum.org/">Remix Browser-based IDE</a></li>
+							<li><a href="https://plugins.jetbrains.com/plugin/9475-intellij-solidity">IntelliJ IDEA plugin</a></li>
+							<li><a href="https://visualstudiogallery.msdn.microsoft.com/96221853-33c4-4531-bdd5-d2ea5acc4799/">Visual Studio Extension</a></li>
+							<li><a href="https://packagecontrol.io/packages/Ethereum/">Package for SublimeText</a></li>
+							<li><a href="https://github.com/0mkara/etheratom">Etheratom Plugin</a></li>
+						</ul>
+					</p>
 					<aside class="notes">
+						* Remix Browser-based IDE with integrated compiler and Solidity runtime environment without server-side components.
+						* IntelliJ IDEA plugin Solidity plugin for IntelliJ IDEA (and all other JetBrains IDEs)
+						* Visual Studio Extension Solidity plugin for Microsoft Visual Studio that includes the Solidity compiler.
+						* Package for SublimeText — Solidity language syntax Solidity syntax highlighting for SublimeText editor.
+						* Etheratom PluginfortheAtomeditorthatfeaturessyntaxhighlighting,compilationandaruntimeenvironment (Backend node & VM compatible).
 					</aside>
 				</section>
 				<section>
-					<h2>Internet Explorer 10</h2>
-				    <object type="image/svg+xml" width="300" height="300" data="images/Internet_Explorer_10_logo.svg"></object>
+					<h2>Installing geth</h2>
+					<p>For OSX</p>
+<pre><code>
+brew tap ethereum/ethereum
+brew install ethereum
+</code></pre>
+					<p>For Windows</p>
+					<p>Use pre-built packages available at <a href="https://geth.ethereum.org/downloads/">https://geth.ethereum.org/downloads/</a></p>
 				</section>
 				<section>
-					<h2>Socket.IO</h2>
+					<h2>Installing Ethereum Wallet</h2>
+					<p>The mist browser is available here: <a href="https://github.com/ethereum/mist/releases">https://github.com/ethereum/mist/releases</a></p>
+					<img src="images/ethereum_wallet_overview.png" />
+				</section>
+				<section>
+					<h2>Test Networks</h2>
+					<p>Ropsten -- Proof of Work</p>
+					<p>Rinkeby -- Proof of Authority</p>
+					<aside class="notes">
+						*Ropsten* — Proof-of-Work test network — vulnerable to attack by malicious actors
+						*Rinkeby* — Proof-of-Authority network, which means that blocks are signed by
+						well-known trusted community members. This prevents attackers from taking over
+						 the mining power on the network. In order to get Rinkeby Ether from the
+						 faucet.rinkeby.io you need to
+						 connect your Github account to your Ethereum address. This helps to mitigate nefarious elements draining
+						 the faucet or collecting lots of Ether to attack the network.
+						https://faucet.rinkeby.io/
+					</aside>
+				</section>
+				<section>
+					<h2>Rinkeby Faucet</h2>
+					<img src="images/faucet_rinkeby_io.png" />
+				</section>
+				<section>
+					<h2>Selecting Test Network</h2>
+					<img src="images/select_test_network.png" />
+				</section>
+				<section>
+					<h2>Deploy Contract</h2>
+					<img src="images/deploy_contract.png" />
+				</section>
+				<section>
+					<h2>Demo</h2>
+				</section>
+				<section>
+					<h2>Helpful Tools</h2>
 					<p>
-					<a href="http://socket.io">Socket.IO</a> wraps a JavaScript API to allow for different transport mechanisms based on browser support.  It provides heartbeats, channels, disconnection notifications and various other things not provided by the WebSocket API.
+						<a href="https://openzeppelin.org/">OpenZeppelin</a>
+						Open framework of reusable and secure smart contracts in Solidity.
 					</p>
-				</section>
-				<section>
-					<h2>SockJS</h2>
-					<p><a href="https://github.com/sockjs‎">SockJS</a> is a browser JavaScript library that provides a WebSocket-like object. SockJS gives you a coherent, cross-browser, Javascript API which creates a low latency, full duplex, cross-domain communication channel between the browser and the web server.</p>
-				</section>
-				<section>
-					<h2>web-socket-js</h2>
-					<p><a href="https://github.com/gimite/web-socket-js">web-socket-js</a> is a WebSocket implementation powered by Flash.</p>
-				</section>
-			</section>
-				<section>
-					<h2>What about HTTP/2</h2>
-					<ul>
-						<li>Server can terminate connection</li>
-						<li>Lack of Browser Support</li>
-						<li>Lack of Server Support</li>
-						<li>Lack of JavaScript API</li>
-					</ul>
-				</section>
-				<section>
-					<h2>Alternatives to WebSocket</h2>
-					<p><a href="http://socket.io">Socket.IO</a></p>
-					<p><a href="http://www.pusher.com">Pusher</a></p>
-					<p><a href="https://github.com/stevegraham/slanger">Slanger</a></p>
-					<p><a href="https://github.com/thunderpush/thunderpush">ThunderPush</a></p>
-					<p><a href="https://github.com/Atmosphere/atmosphere">Atmosphere</a></p>
-					<p>And many more...</p>
-				</section>
-				<section>
-					<h2>Helpful Links</h2>
-					<p><a href="http://bit.ly/lombardi_websocket_book">WebSocket (O'Reilly)</a></p>
-					<p><a href="http://tools.ietf.org/html/rfc6455‎">RFC 6455</a></p>
-					<p><a href="http://www.html5rocks.com/en/tutorials/websockets/basics/">HTML5 Rocks</a></p>
-					<p><a href="https://github.com/gimite/web-socket-js">web-socket-js</a></p>
-					<p><a href="http://socket.io">socket.io</a></p>
-				</section>
-				<section>
-					<h2>3 Things About WebSocket</h2>
-					<p>Little to No Overhead</p>
-					<p>Full-Duplex Bi-directional Communication</p>
-					<p>Layered Subprotocol Support</p>
+					<p>
+						<a href="http://truffleframework.com/">Truffle Framework</a>
+						It is a development environment, testing framework and asset pipeline for Ethereum.
+					</p>
 				</section>
 				<section>
 					<h1>Fin</h1>
@@ -637,7 +579,7 @@ if (window.WebSocket) {
 					</p>
 					<hr />
 					<p>
-						<small><a href="https://github.com/kinabalu/real_time_with_websockets">https://github.com/kinabalu/real_time_with_websockets</a></small>
+						<small><a href="https://github.com/kinabalu/build_own_cryptocurrency">https://github.com/kinabalu/build_own_cryptocurrency</a></small>
 					</p>
 
 				</section>
